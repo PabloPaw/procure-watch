@@ -1,0 +1,38 @@
+# Virtual environments
+.venv/
+venv/
+env/
+.env/
+
+# System files
+.DS_Store
+Thumbs.db
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment configuration & secrets
+.env
+.env.local
+.env.*
+!.env.example
+.streamlit/secrets.toml
+
+# Logs and caches
+*.log
+logs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/
+
+# Raw ICIJ data (~600 MB) — never commit to GitHub
+data/raw/
+data/*.csv
+!data/processed_suspects.csv
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
