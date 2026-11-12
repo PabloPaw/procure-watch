@@ -6,7 +6,7 @@
 
 **Symulacja dochodzenia compliance na danych ICIJ Offshore Leaks — od surowych plików CSV, przez graf powiązań kapitałowych, po interaktywny pulpit analityka śledczego.**
 
-[![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/Python-3.12%2B-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
 [![Pandas](https://img.shields.io/badge/pandas-3.0-150458?style=flat-square&logo=pandas&logoColor=white)](https://pandas.pydata.org/)
 [![NetworkX](https://img.shields.io/badge/NetworkX-3.6-FF6F00?style=flat-square)](https://networkx.org/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.60-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)](https://streamlit.io/)
@@ -159,12 +159,12 @@ Skala mówi sama za siebie: jedna skrzynka pocztowa na Tortoli jest adresem reje
 
 | Technologia | Zastosowanie w projekcie |
 |---|---|
-| **Python 3.11+** | Język pipeline'u; adnotacje typów, `pathlib`, `from __future__ import annotations` |
+| **Python 3.12+** | Język pipeline'u; adnotacje typów, `pathlib`, `from __future__ import annotations`. Przypięty NumPy 2.5 wymaga Pythona 3.12 lub nowszego |
 | **pandas** | Wczytywanie wielomilionowych CSV, czyszczenie, `groupby`, wzbogacanie i eksport |
 | **NetworkX** | Model grafowy `DiGraph`, przechodzenie po sąsiedztwie, analiza centralności |
 | **NumPy** | Statystyka progowa i wektoryzowane warunki (`np.where`) |
-| **Streamlit** | Pulpit analityka: metryki, filtry, tabela tropów, przełącznik motywu |
-| **Plotly Express** | Interaktywna wizualizacja rozkładu geograficznego podejrzanych podmiotów |
+| **Streamlit** | Pulpit analityka: metryki całego pliku, filtry w panelu bocznym, tabela tropów. Motyw jest stały w `config.toml`, bez przełącznika |
+| **Plotly Express** | Wykresy sygnałów według kraju i według typu (liczba sygnałów oraz próg kategorii) |
 | **streamlit-aggrid** | Interaktywna tabela tropów z filtrowaniem i sortowaniem w nagłówkach kolumn |
 
 Kod podzielony jest na **warstwę analityczną** (`src/`) i **warstwę prezentacji** (`app/`). Pipeline jest w pełni skryptowalny i nie wymaga uruchomionego interfejsu, a dashboard czyta wyłącznie gotowy artefakt CSV — dzięki czemu start aplikacji jest natychmiastowy niezależnie od rozmiaru danych wejściowych.
@@ -212,7 +212,7 @@ Najważniejsze funkcje w `src/investigation.py`:
 
 ### Wymagania wstępne
 
-- **Python 3.11 lub nowszy**
+- **Python 3.12 lub nowszy** (przypięty `numpy==2.5.1` deklaruje `Requires-Python: >=3.12`)
 - **~4 GB wolnej pamięci RAM** (pełny zbiór ICIJ to kilka milionów krawędzi)
 - **~2 GB miejsca na dysku** na dane surowe
 
@@ -315,10 +315,17 @@ streamlit run app/dashboard.py --server.port 8502
 
 ### Funkcje dashboardu
 
-- **Metryki nagłówkowe** — liczba przeanalizowanych podmiotów, wykrytych anomalii i reprezentowanych krajów
-- **Tabela tropów (AgGrid)** — filtrowanie i sortowanie w nagłówkach kolumn, paginacja (20 wierszy), uzasadnienie każdego oznaczenia
-- **Ranking geograficzny** — interaktywny wykres Plotly: Top 10 krajów według liczby anomalii
-- **Motyw ciemny** — skonfigurowany w `.streamlit/config.toml`
+Panel boczny startuje otwarty. Filtry kanoniczne:
+
+- **Typ** — wszystkie, osoba, pośrednik albo adres
+- **Tylko sygnały powyżej progu** — domyślnie włączone
+- **Minimalna liczba powiązań** — pole liczbowe oraz skróty 5, 50, 100 i 1000
+
+Metryki liczą cały plik, nie widok po filtrze: tropy z co najmniej 5 powiązaniami, sygnały powyżej progu, ich udział w tej liście, kraje bez zastępczego „Nieznany” oraz największy trop (jego `label`). Osobna linia podaje, ile wierszy jest w widoku. Przy metrykach jest nota, że to sygnał statystyczny, a nie ustalenie nieprawidłowości.
+
+Tabela pokazuje etykietę (`label`, więc adres bez `name` nadal ma nazwę), identyfikator węzła, polski typ (osoba / pośrednik / adres), próg, liczbę powiązań i uzasadnienie. Filtry w nagłówkach AgGrid dotyczą tylko tabeli. Wykresy używają tego samego widoku co tabela: jeden sygnał to jeden kraj (pierwszy niepusty, bez „Nieznany”), a słupek typu zestawia liczbę sygnałów z progiem kategorii.
+
+Motyw (węgiel, chłodna szarość, złamana biel, stalowy błękit) jest ustawiony w `.streamlit/config.toml`. Aplikacja nie ma przełącznika motywu.
 
 ---
 

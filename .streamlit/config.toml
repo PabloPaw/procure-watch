@@ -1,7 +1,31 @@
+# Węgiel, chłodna szarość, złamana biel, jeden akcent stalowego błękitu.
+
 [theme]
-base="dark"
-primaryColor="#FFE600"
-backgroundColor="#1E1E1E"
-secondaryBackgroundColor="#2D2D2D"
-textColor="#FFFFFF"
-font="sans serif"
+base = "dark"
+primaryColor = "#6E8EAE"
+backgroundColor = "#14171C"
+secondaryBackgroundColor = "#232830"
+textColor = "#E6E4DE"
+linkColor = "#8EADC6"
+blueColor = "#6E8EAE"
+grayColor = "#8B939E"
+font = "sans-serif"
+baseFontSize = 16
+baseRadius = "0.4rem"
+buttonRadius = "0.4rem"
+borderColor = "#3A424E"
+dataframeBorderColor = "#3A424E"
+showWidgetBorder = true
+showSidebarBorder = true
+metricValueFontSize = "1.5rem"
+metricValueFontWeight = 600
+headingFontSizes = ["2rem", "1.35rem", "1.15rem"]
+chartCategoricalColors = ["#6E8EAE", "#8FA8BE", "#4E6E8C", "#C5D0DA", "#3E5568", "#A7B8C6"]
+chartSequentialColors = ["#E6EEF4", "#D0DEE9", "#B7CDDC", "#9BB9CC", "#7FA4BB", "#6E8EAE", "#5A7894", "#47627A", "#354C60", "#243646"]
+
+[theme.sidebar]
+backgroundColor = "#1B2027"
+secondaryBackgroundColor = "#2A313A"
+borderColor = "#3A424E"
+primaryColor = "#6E8EAE"
+textColor = "#E6E4DE"
